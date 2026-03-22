@@ -55,29 +55,40 @@ body { background-color: var(--bg-dark); color: var(--text-main); font-family: v
 .badge { display: inline-block; padding: 8px 16px; border: 1px solid var(--glass-border); border-radius: 100px; background: var(--glass-bg); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
 .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; letter-spacing: -1px; margin-bottom: 24px; }
 .hero p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
-.hero-buttons { display: flex; gap: 16px; justify-content: center; margin-bottom: 32px; }
-.trust-line { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 1px; }
+.hero-buttons { display: flex; gap: 16px; justify-content: center; margin-bottom: 40px; }
+.trust-logos { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.trust-logos span { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 1px; }
+.logos-flex { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; opacity: 0.6; }
+.logos-flex strong { font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; color: #fff; }
 
-/* --- Dynamic Cursor Follow Effect for Services --- */
+/* --- Dynamic Cursor Follow Effect for Cards --- */
 .section-header { text-align: center; margin-bottom: 60px; }
 .section-header h2 { font-size: 2.5rem; margin-bottom: 16px; }
 .section-header p { color: var(--text-muted); font-size: 1.1rem; }
 
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .interactive-card { position: relative; padding: 40px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; }
-.interactive-card:hover { transform: translateY(-5px); }
-.interactive-card .card-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 240, 255, 0.06), transparent 40%); z-index: 1; pointer-events: none; }
+.interactive-card:hover { transform: translateY(-5px); border-color: rgba(0,240,255,0.4); }
+.interactive-card .card-glow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 240, 255, 0.08), transparent 40%); z-index: 1; pointer-events: none; }
 .interactive-card .card-border { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: inherit; z-index: 2; pointer-events: none; }
 .interactive-card .card-border::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(0, 240, 255, 0.5), transparent 40%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
 .card-content { position: relative; z-index: 3; }
-.card-content .icon-wrapper { width: 48px; height: 48px; color: var(--neon-cyan); margin-bottom: 24px; }
-.card-content h3 { font-size: 1.5rem; margin-bottom: 16px; }
+.card-content .icon-wrapper { font-size: 2.5rem; margin-bottom: 24px; }
+.card-content h3 { font-size: 1.3rem; margin-bottom: 16px; }
 .card-content p { color: var(--text-muted); font-size: 0.95rem; }
+
+/* --- Portfolio Section (New) --- */
+.portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.portfolio-card { padding: 0; display: flex; flex-direction: column; }
+.portfolio-img { height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: linear-gradient(45deg, rgba(0,240,255,0.05), transparent); border-bottom: 1px solid var(--glass-border); position: relative; z-index: 3; }
+.portfolio-info { padding: 32px; position: relative; z-index: 3; }
+.portfolio-info h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--neon-cyan); }
+.portfolio-info p { color: var(--text-muted); font-size: 0.95rem; }
 
 /* --- Process Section --- */
 .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .process-step { padding: 32px; transition: var(--transition-smooth); position: relative; overflow: hidden; }
-.process-step:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(0, 240, 255, 0.3); }
+.process-step:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(0, 240, 255, 0.3); transform: translateY(-5px); }
 .step-number { font-size: 3rem; font-weight: 800; color: rgba(255, 255, 255, 0.05); position: absolute; top: 10px; right: 20px; }
 .process-step h4 { font-size: 1.25rem; margin-bottom: 12px; color: var(--neon-cyan); }
 .process-step p { color: var(--text-muted); font-size: 0.9rem; }
@@ -117,8 +128,11 @@ body { background-color: var(--bg-dark); color: var(--text-main); font-family: v
 .owner-details h3 { font-size: 1.8rem; letter-spacing: 1px; color: var(--neon-cyan); }
 .owner-details .role { color: var(--text-main); font-weight: 600; margin-bottom: 16px; }
 .details p { color: var(--text-muted); margin-bottom: 8px; }
-.mailto-link { color: var(--text-muted); text-decoration: underline; font-size: 0.9rem; }
-.mailto-link:hover { color: var(--neon-cyan); }
+.trust-bullets { margin: 24px 0; }
+.trust-bullets p { color: var(--text-muted); margin-bottom: 8px; font-size: 0.95rem; }
+.mailto-link { color: var(--neon-cyan); text-decoration: none; font-size: 1rem; font-weight: 600; border-bottom: 1px solid transparent; transition: 0.3s; }
+.mailto-link:hover { border-bottom: 1px solid var(--neon-cyan); }
+
 .form-group { margin-bottom: 24px; position: relative; }
 .form-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-muted); }
 .form-group input, .form-group textarea { width: 100%; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 16px; color: var(--text-main); font-family: inherit; font-size: 1rem; transition: var(--transition-smooth); }
@@ -152,29 +166,8 @@ body { background-color: var(--bg-dark); color: var(--text-main); font-family: v
 .chat-input-area button svg { width: 20px; height: 20px; }
 
 /* --- Floating Actions & Popups (Small & Cornered) --- */
-.floating-buttons {
-    position: fixed;
-    left: 20px; /* Corner me */
-    bottom: 20px; /* Side me */
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 999;
-}
-.float-btn {
-    width: 40px; /* Chota sa */
-    height: 40px; /* Chota sa */
-    border-radius: 50%;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--text-main);
-    transition: var(--transition-smooth);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
+.floating-buttons { position: fixed; left: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+.float-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; color: var(--text-main); transition: var(--transition-smooth); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 .float-btn svg { width: 18px; height: 18px; }
 .float-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: scale(1.1); }
 
@@ -190,8 +183,8 @@ body { background-color: var(--bg-dark); color: var(--text-main); font-family: v
 @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
 
 /* --- Scroll Reveal --- */
-.reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.25, 1, 0.5, 1); }
-.reveal.active { opacity: 1; transform: translateY(0); }
+.fade-up { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.25, 1, 0.5, 1); }
+.fade-up.active { opacity: 1; transform: translateY(0); }
 .delay-1 { transition-delay: 0.1s; }
 .delay-2 { transition-delay: 0.2s; }
 .delay-3 { transition-delay: 0.3s; }
@@ -199,7 +192,7 @@ body { background-color: var(--bg-dark); color: var(--text-main); font-family: v
 
 /* Responsive basics */
 @media (max-width: 992px) {
-    .services-grid, .process-grid, .pricing-grid, .contact-wrapper { grid-template-columns: 1fr; }
+    .services-grid, .portfolio-grid, .process-grid, .pricing-grid, .contact-wrapper { grid-template-columns: 1fr; }
     .nav-links { display: none; }
     .floating-buttons { display: none; }
 }

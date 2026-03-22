@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cursorGlow.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
     });
 
-    /* --- Service Cards Cursor Follow Light Effect --- */
+    /* --- Service & Portfolio Cards Cursor Follow Light Effect --- */
     const cards = document.querySelectorAll('.interactive-card');
     cards.forEach(card => {
         card.addEventListener('mousemove', e => {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if(entry.isIntersecting) {
-                entry.target.classList.add('active'); // Reused active class from CSS
+                entry.target.classList.add('active'); 
                 entry.target.style.opacity = 1;
                 entry.target.style.transform = 'translateY(0)';
             }
@@ -38,13 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dynamic Numbers
     setInterval(() => {
-        // Increase automations slowly
         let currentAuto = parseInt(countAuto.innerText.replace(',', ''));
         countAuto.innerText = (currentAuto + Math.floor(Math.random() * 2)).toLocaleString();
         
-        // Randomize live users slightly
         let currentUsers = parseInt(countUsers.innerText);
-        let change = Math.floor(Math.random() * 7) - 3; // -3 to +3
+        let change = Math.floor(Math.random() * 7) - 3; 
         countUsers.innerText = Math.max(10, currentUsers + change);
     }, 3000);
 
@@ -52,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         chartContainer.innerHTML = '';
         for(let i=0; i<8; i++) {
-            let height = Math.floor(Math.random() * 60) + 30; // 30% to 90%
+            let height = Math.floor(Math.random() * 60) + 30; 
             const bar = document.createElement('div');
             bar.className = 'bar';
             bar.style.height = `${height}%`;
@@ -78,10 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => toast.remove(), 4500);
     }
 
-    // Hero Popup
     setTimeout(() => showToast("🚀 New automation deployed"), 2000);
-    
-    // Dashboard recurring popup
     setInterval(() => showToast("New client connected"), 12000);
 
     /* --- 5s Lead Capture Popup --- */
@@ -103,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatSend = document.getElementById('chatSend');
     let hasOpenedChat = false;
 
-    // Toggle Chat
     chatToggle.addEventListener('click', () => {
         chatWindow.classList.toggle('open');
         if(!hasOpenedChat) {
@@ -121,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
             chatMessages.appendChild(msgDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             
-            // Delay then type letter by letter
             setTimeout(() => {
                 msgDiv.innerHTML = '';
                 let i = 0;
@@ -130,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     i++;
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                     if(i >= text.length) clearInterval(typingInterval);
-                }, 30); // typing speed
-            }, 1200); // thought delay
+                }, 30); 
+            }, 1200); 
         } else {
             msgDiv.innerText = text;
             chatMessages.appendChild(msgDiv);
@@ -179,30 +172,25 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let isValid = true;
 
-        // Reset errors
         document.querySelectorAll('.form-group').forEach(el => el.classList.remove('error'));
 
-        // Name >= 3
         if(fName.value.trim().length < 3) {
             fName.parentElement.classList.add('error');
             isValid = false;
         }
 
-        // Phone = exactly 10 digits
-        const cleanPhone = fPhone.value.replace(/\D/g, ''); // strip non digits
+        const cleanPhone = fPhone.value.replace(/\D/g, ''); 
         if(cleanPhone.length !== 10) {
             fPhone.parentElement.classList.add('error');
             isValid = false;
         }
 
-        // Email regex
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailRegex.test(fEmail.value.trim())) {
             fEmail.parentElement.classList.add('error');
             isValid = false;
         }
 
-        // Message >= 10
         if(fMessage.value.trim().length < 10) {
             fMessage.parentElement.classList.add('error');
             isValid = false;
