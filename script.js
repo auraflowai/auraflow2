@@ -98,11 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatSend = document.getElementById('chatSend');
     let hasOpenedChat = false;
 
+    // Initial bot greeting setup
+    const initialGreeting = "Hi 👋 I’m the AI assistant of AuraFlow AI.\nI can help you with website development, AI automation, chatbots, and landing pages.\nTell me what you want to build.";
+
     chatToggle.addEventListener('click', () => {
         chatWindow.classList.toggle('open');
         if(!hasOpenedChat) {
             hasOpenedChat = true;
-            setTimeout(() => botReply("Hi 👋 Need automation for your business?"), 500);
+            setTimeout(() => botReply(initialGreeting), 500);
         }
     });
     chatClose.addEventListener('click', () => chatWindow.classList.remove('open'));
@@ -110,16 +113,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function appendMessage(sender, text) {
         const msgDiv = document.createElement('div');
         msgDiv.className = `chat-msg ${sender}`;
+        
         if(sender === 'bot') {
             msgDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
             chatMessages.appendChild(msgDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             
             setTimeout(() => {
-                msgDiv.innerHTML = '';
+                msgDiv.innerHTML = ''; // Remove typing dots
                 let i = 0;
                 let typingInterval = setInterval(() => {
-                    msgDiv.innerHTML += text.charAt(i);
+                    // Use textContent to preserve \n as line breaks due to white-space: pre-wrap
+                    msgDiv.textContent += text.charAt(i);
                     i++;
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                     if(i >= text.length) clearInterval(typingInterval);
@@ -144,12 +149,26 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.value = '';
         
         let lower = text.toLowerCase();
-        let reply = "I can guide you! Shivam specializes in this. Want to hop on a call?";
         
-        if(lower.includes('hello') || lower.includes('hi ')) reply = "Hello there! How can we scale your business today?";
-        else if(lower.includes('price') || lower.includes('cost')) reply = "Pricing depends on the scope of the systems. Starter plans begin around custom strategy discussions to ensure high ROI.";
-        else if(lower.includes('ai') || lower.includes('automation')) reply = "AuraFlow creates AI agents that automate your redundant tasks, support, and internal workflows seamlessly.";
-        else if(lower.includes('website') || lower.includes('web')) reply = "We engineer high-conversion websites designed purely to turn visitors into paying clients.";
+        // Default reply
+        let reply = "I understand. Could you share more details? You can also click the WhatsApp button to chat directly with Shivam.";
+        
+        // Business logic keyword detection
+        if (lower.includes('price') || lower.includes('cost') || lower.includes('charge') || lower.includes('fee') || lower.includes('budget')) {
+            reply = "Price depends on project requirements.\n\nBasic Website: ₹5,000 – ₹15,000\nProfessional Website: ₹15,000 – ₹40,000\nAI Automation System: ₹10,000 – ₹50,000+\n\nTell me:\n• type of project\n• features needed\n• timeline\n\nI can give exact estimate.";
+        } else if (lower.includes('time') || lower.includes('days') || lower.includes('how long') || lower.includes('duration')) {
+            reply = "Typical timeline:\n\nSimple website: 2 – 4 days\nProfessional website: 5 – 10 days\nAI automation: 7 – 14 days\n\nTimeline depends on features.";
+        } else if (lower.includes('demo') || lower.includes('portfolio') || lower.includes('example') || lower.includes('work')) {
+            reply = "You can view demo projects in the Portfolio section of this website.\n\nIf you want a custom demo, tell me your business type.";
+        } else if (lower.includes('contact') || lower.includes('reach') || lower.includes('call') || lower.includes('whatsapp') || lower.includes('phone')) {
+            reply = "You can contact easily:\n\n• fill the contact form\n• click WhatsApp button\n• describe your project idea\n\nResponse time: within 24 hours.";
+        } else if (lower.includes('what do you do') || lower.includes('about') || lower.includes('services')) {
+            reply = "AuraFlow AI creates modern websites and AI automation systems that help businesses get more customers and save time.";
+        } else if (lower.includes('build') || lower.includes('make') || lower.includes('need') || lower.includes('want') || lower.includes('website') || lower.includes('automation') || lower.includes('bot')) {
+            reply = "Great! To help you better, please tell me:\n\n• What type of website or automation do you need?\n• What is your business type?\n• What features do you want?\n• When do you need it completed?";
+        } else if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
+            reply = initialGreeting;
+        }
         
         botReply(reply);
     }
@@ -174,28 +193,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelectorAll('.form-group').forEach(el => el.classList.remove('error'));
 
+        // Name Validation
         if(fName.value.trim().length < 3) {
             fName.parentElement.classList.add('error');
             isValid = false;
         }
 
+        // Phone Validation
         const cleanPhone = fPhone.value.replace(/\D/g, ''); 
         if(cleanPhone.length !== 10) {
             fPhone.parentElement.classList.add('error');
             isValid = false;
         }
 
+        // Email Validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailRegex.test(fEmail.value.trim())) {
             fEmail.parentElement.classList.add('error');
             isValid = false;
         }
 
+        // Message Validation
         if(fMessage.value.trim().length < 10) {
             fMessage.parentElement.classList.add('error');
             isValid = false;
         }
 
+        // Submission Logic
         if(isValid) {
             const waText = `Hello Shivam,\nMy name is ${fName.value.trim()}\nPhone: ${cleanPhone}\nEmail: ${fEmail.value.trim()}\nProject Details:\n${fMessage.value.trim()}`;
             const encodedText = encodeURIComponent(waText);
