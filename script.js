@@ -89,6 +89,41 @@ document.addEventListener('DOMContentLoaded', () => {
         leadPopup.classList.remove('show');
     });
 
+    /* --- Hamburger Menu Logic --- */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const menuLinks = document.querySelectorAll('.side-menu-links .menu-link');
+
+    function openMenu() {
+        sideMenu.classList.add('open');
+        menuOverlay.classList.add('open');
+    }
+    
+    function closeMenu() {
+        sideMenu.classList.remove('open');
+        menuOverlay.classList.remove('open');
+    }
+
+    if(hamburgerBtn) hamburgerBtn.addEventListener('click', openMenu);
+    if(closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+    if(menuOverlay) menuOverlay.addEventListener('click', closeMenu);
+    
+    menuLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    /* --- Theme Toggle Logic --- */
+    if(themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeToggleBtn.innerText = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+        });
+    }
+
     /* --- AI Chatbot Logic --- */
     const chatToggle = document.getElementById('chatToggle');
     const chatWindow = document.getElementById('chatWindow');
@@ -98,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatSend = document.getElementById('chatSend');
     let hasOpenedChat = false;
 
-    // Initial bot greeting setup
     const initialGreeting = "Hi 👋 I’m the AI assistant of AuraFlow AI.\nI can help you with website development, AI automation, chatbots, and landing pages.\nTell me what you want to build.";
 
     chatToggle.addEventListener('click', () => {
@@ -120,10 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
             chatMessages.scrollTop = chatMessages.scrollHeight;
             
             setTimeout(() => {
-                msgDiv.innerHTML = ''; // Remove typing dots
+                msgDiv.innerHTML = ''; 
                 let i = 0;
                 let typingInterval = setInterval(() => {
-                    // Use textContent to preserve \n as line breaks due to white-space: pre-wrap
                     msgDiv.textContent += text.charAt(i);
                     i++;
                     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -149,11 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.value = '';
         
         let lower = text.toLowerCase();
-        
-        // Default reply
         let reply = "I understand. Could you share more details? You can also click the WhatsApp button to chat directly with Shivam.";
         
-        // Business logic keyword detection
         if (lower.includes('price') || lower.includes('cost') || lower.includes('charge') || lower.includes('fee') || lower.includes('budget')) {
             reply = "Price depends on project requirements.\n\nBasic Website: ₹5,000 – ₹15,000\nProfessional Website: ₹15,000 – ₹40,000\nAI Automation System: ₹10,000 – ₹50,000+\n\nTell me:\n• type of project\n• features needed\n• timeline\n\nI can give exact estimate.";
         } else if (lower.includes('time') || lower.includes('days') || lower.includes('how long') || lower.includes('duration')) {
@@ -178,58 +208,80 @@ document.addEventListener('DOMContentLoaded', () => {
         if(e.key === 'Enter') handleUserInput();
     });
 
-    /* --- Strict Form Validation & WA Submission --- */
+    /* --- Strict Form Validation, Webhook & WA Submission --- */
     const contactForm = document.getElementById('contactForm');
     
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const fName = document.getElementById('fname');
-        const fPhone = document.getElementById('fphone');
-        const fEmail = document.getElementById('femail');
-        const fMessage = document.getElementById('fmessage');
-        
-        let isValid = true;
+    if(contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const fName = document.getElementById('fname') || document.getElementById('name');
+            const fPhone = document.getElementById('fphone') || document.getElementById('phone');
+            const fEmail = document.getElementById('femail') || document.getElementById('email');
+            const fMessage = document.getElementById('fmessage') || document.getElementById('message');
+            
+            let isValid = true;
 
-        document.querySelectorAll('.form-group').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('.form-group').forEach(el => el.classList.remove('error'));
 
-        // Name Validation
-        if(fName.value.trim().length < 3) {
-            fName.parentElement.classList.add('error');
-            isValid = false;
-        }
+            // Name Validation
+            if(fName && fName.value.trim().length < 3) {
+                fName.parentElement.classList.add('error');
+                isValid = false;
+            }
 
-        // Phone Validation
-        const cleanPhone = fPhone.value.replace(/\D/g, ''); 
-        if(cleanPhone.length !== 10) {
-            fPhone.parentElement.classList.add('error');
-            isValid = false;
-        }
+            // Phone Validation
+            let cleanPhone = "";
+            if(fPhone) {
+                cleanPhone = fPhone.value.replace(/\D/g, ''); 
+                if(cleanPhone.length !== 10) {
+                    fPhone.parentElement.classList.add('error');
+                    isValid = false;
+                }
+            }
 
-        // Email Validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(!emailRegex.test(fEmail.value.trim())) {
-            fEmail.parentElement.classList.add('error');
-            isValid = false;
-        }
+            // Email Validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(fEmail && !emailRegex.test(fEmail.value.trim())) {
+                fEmail.parentElement.classList.add('error');
+                isValid = false;
+            }
 
-        // Message Validation
-        if(fMessage.value.trim().length < 10) {
-            fMessage.parentElement.classList.add('error');
-            isValid = false;
-        }
+            // Message Validation
+            if(fMessage && fMessage.value.trim().length < 10) {
+                fMessage.parentElement.classList.add('error');
+                isValid = false;
+            }
 
-        // Submission Logic
-        if(isValid) {
-            const waText = `Hello Shivam,\nMy name is ${fName.value.trim()}\nPhone: ${cleanPhone}\nEmail: ${fEmail.value.trim()}\nProject Details:\n${fMessage.value.trim()}`;
-            const encodedText = encodeURIComponent(waText);
-            const waUrl = `https://wa.me/919369968586?text=${encodedText}`;
-            window.open(waUrl, '_blank');
-        }
-    });
+            // Submission Logic
+            if(isValid) {
+                // WEBHOOK INTEGRATION
+                fetch("https://blaise-goosewinged-undangerously.ngrok-free.dev/webhook-test/062e446e-4748-437a-ae3c-46ae2a9576d0", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: fName.value,
+                        phone: fPhone.value,
+                        email: fEmail.value,
+                        message: fMessage.value
+                    })
+                }).catch(err => console.error('Webhook Error:', err));
+
+                const waText = `Hello Shivam,\nMy name is ${fName.value.trim()}\nPhone: ${cleanPhone}\nEmail: ${fEmail.value.trim()}\nProject Details:\n${fMessage.value.trim()}`;
+                const encodedText = encodeURIComponent(waText);
+                const waUrl = `https://wa.me/919369968586?text=${encodedText}`;
+                window.open(waUrl, '_blank');
+            }
+        });
+    }
 
     // Auto format phone input to numbers only while typing
-    document.getElementById('fphone').addEventListener('input', function(e) {
-        this.value = this.value.replace(/\D/g, '').substring(0,10);
-    });
+    const phoneInput = document.getElementById('fphone') || document.getElementById('phone');
+    if(phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/\D/g, '').substring(0,10);
+        });
+    }
 });
