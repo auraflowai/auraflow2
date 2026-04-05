@@ -94,17 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeMenuBtn = document.getElementById('closeMenuBtn');
     const sideMenu = document.getElementById('sideMenu');
     const menuOverlay = document.getElementById('menuOverlay');
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const btnDarkMode = document.getElementById('btnDarkMode');
+    const btnLightMode = document.getElementById('btnLightMode');
     const menuLinks = document.querySelectorAll('.side-menu-links .menu-link');
 
     function openMenu() {
-        sideMenu.classList.add('open');
-        menuOverlay.classList.add('open');
+        if(sideMenu) sideMenu.classList.add('open');
+        if(menuOverlay) menuOverlay.classList.add('open');
     }
     
     function closeMenu() {
-        sideMenu.classList.remove('open');
-        menuOverlay.classList.remove('open');
+        if(sideMenu) sideMenu.classList.remove('open');
+        if(menuOverlay) menuOverlay.classList.remove('open');
     }
 
     if(hamburgerBtn) hamburgerBtn.addEventListener('click', openMenu);
@@ -116,11 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* --- Theme Toggle Logic --- */
-    if(themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const isLight = document.body.classList.contains('light-mode');
-            themeToggleBtn.innerText = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+    if(btnDarkMode && btnLightMode) {
+        btnDarkMode.addEventListener('click', () => {
+            document.body.classList.remove('light-mode');
+            closeMenu();
+        });
+        btnLightMode.addEventListener('click', () => {
+            document.body.classList.add('light-mode');
+            closeMenu();
         });
     }
 

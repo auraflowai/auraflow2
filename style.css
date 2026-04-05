@@ -83,13 +83,17 @@ body.light-mode .gradient-text { background: linear-gradient(to right, #0f172a, 
 .menu-overlay.open { opacity: 1; pointer-events: all; }
 .close-menu-btn { position: absolute; top: 16px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 2rem; cursor: pointer; transition: color 0.3s; }
 .close-menu-btn:hover { color: var(--neon-cyan); }
-.side-menu-header { margin-bottom: 32px; margin-top: 16px; text-align: center; }
-.side-menu-logo { width: 120px; border-radius: 12px; object-fit: contain; }
+.side-menu-header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; margin-top: 16px; }
+.side-menu-logo { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
+.side-menu-brand { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
+.side-menu-brand span { color: var(--neon-cyan); }
 .side-menu-links { list-style: none; margin-bottom: auto; }
 .side-menu-links li { margin-bottom: 16px; }
-.side-menu-links a { color: var(--text-main); text-decoration: none; font-size: 1.1rem; font-weight: 500; display: block; padding: 8px 0; transition: color 0.3s; }
+.side-menu-links a { display: flex; align-items: center; gap: 12px; color: var(--text-main); text-decoration: none; font-size: 1.1rem; font-weight: 700; padding: 10px 0; transition: color 0.3s; }
 .side-menu-links a:hover { color: var(--neon-cyan); }
-.theme-toggle-wrap { margin-top: 24px; }
+.theme-toggle-wrap { margin-top: auto; display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--glass-border); padding-top: 20px; }
+.theme-btn { background: transparent; border: none; color: var(--text-main); font-weight: 700; font-size: 1.1rem; text-align: left; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: color 0.3s; padding: 5px 0;}
+.theme-btn:hover { color: var(--neon-cyan); }
 
 /* --- Hero Section --- */
 .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 100px; }
@@ -164,11 +168,11 @@ body.light-mode .gradient-text { background: linear-gradient(to right, #0f172a, 
 .features { margin-bottom: 32px; text-align: left; }
 .features p { margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem; }
 
-/* --- About Section (New) --- */
+/* --- About Section --- */
 .about-content { padding: 40px; text-align: left; }
 .about-content p { margin-bottom: 16px; font-size: 1.05rem; color: var(--text-muted); }
-.about-specialties, .about-goal { margin-top: 24px; margin-bottom: 24px; }
-.about-specialties h3, .about-goal h3 { color: var(--neon-cyan); margin-bottom: 12px; font-size: 1.2rem; }
+.about-specialties { margin-top: 24px; margin-bottom: 24px; }
+.about-specialties h3 { color: var(--neon-cyan); margin-bottom: 12px; font-size: 1.2rem; }
 .about-content ul { list-style: none; padding-left: 0; }
 .about-content li { margin-bottom: 8px; color: var(--text-main); font-weight: 500; font-size: 0.95rem; }
 .about-footer-text { margin-top: 32px; font-weight: 600; color: var(--text-main) !important; }
