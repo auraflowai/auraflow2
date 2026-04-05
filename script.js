@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Submission Logic
             if(isValid) {
                 // WEBHOOK INTEGRATION
-                fetch("https://blaise-goosewinged-undangerously.ngrok-free.dev/webhook-test/062e446e-4748-437a-ae3c-46ae2a9576d0", {
+                fetch("https://blaise-goosewinged-undangerously.ngrok-free.dev/webhook/062e446e-4748-437a-ae3c-46ae2a9576d0", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
